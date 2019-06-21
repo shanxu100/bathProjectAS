@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">智能厕所</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_manage_set_aty">ManageSetAty</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
+
+    <string name="input_app_key">1、AppKey：</string>
+    <string name="input_AccessToken">2、AccessToken：</string>
+    <string name="input_ezopen_url">3、Url (ezopen协议)：</string>
+    <string name="string_btn_code">扫一扫</string>
+    <string name="string_btn_play">开始播放</string>
+    <string name="string_btn_playback">带时间轴(只有回放才会有效果)</string>
+    <string name="string_btn_clear_cache">清除参数</string>
+    <string name="string_btn_clear_cache_sure">清除参数后需要重新获取才能进行预览，是否清除参数？</string>
+    <string name="string_not_found_recordfile">"未找到录像文件"</string>
+
+    <string name="string_stop_play">"停止"</string>
+    <string name="string_pause_play">"暂停"</string>
+    <string name="string_start_play">"播放"</string>
+
+    <string name="input_areadomain_url">4、AreaDomain：</string>
+    <string name="string_global">英文海外版本</string>
+    <string name="string_cn">中文国内版本</string>
+
+    <string name="str_man_smell">男厕异味</string>
+    <string name="str_woman_smell">女厕异味</string>
+    <string name="str_disabled_smell">残卫异味</string>
+
+    <string name="str_level">级</string>
+
+</resources>

@@ -1,0 +1,151 @@
+package luluteam.bath.bathprojectas.fragment.pit;
+
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import java.util.List;
+
+import luluteam.bath.bathprojectas.R;
+import luluteam.bath.bathprojectas.activity.PitActivity;
+import luluteam.bath.bathprojectas.databinding.FragmentDisabledBinding;
+import luluteam.bath.bathprojectas.model.pit.Bus485Pit;
+import luluteam.bath.bathprojectas.utils.ToastUtil;
+import luluteam.bath.bathprojectas.view.dialog.CleanessDialog;
+
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+@Deprecated
+public class DisabledFragment extends Fragment implements PitActivity.PitDataListener {
+
+    private FragmentDisabledBinding mBinding;
+    private CleanessDialog dialog;
+
+    private Bus485Pit.ItemPit itemPit = Bus485Pit.ItemPit.newEmptyInstance(0);
+    private final int ONLY_INDEX = 121;
+
+
+    private static final String TAG = "DisabledFragment";
+
+    public DisabledFragment() {
+        // Required empty public constructor
+    }
+
+    public static DisabledFragment newInstance() {
+        return new DisabledFragment();
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_disabled, container, false);
+        Log.e(TAG, "PitFragment===onCreateView:");
+        mBinding.disablePit.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCleanessDialog(itemPit);
+            }
+        });
+
+        return mBinding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.e(TAG, "PitFragment===onDestroyView:");
+
+    }
+
+
+    /**
+     * TODO 检查接收单个数据时，残卫-坑位 数据为什么没有变化
+     * 1、检查 onPitSitData(Bus485Pit.ItemPit itemPit, int position) 方法是否接收到了正确的数据
+     * 2、ItemPit中规定 type ：0表示蹲位，1表示便池。残卫这里只有蹲位，所以type只能是0。所以检查服务器推送过来的数据是否有误
+     */
+
+
+    @Override
+    public void onPitData(List<Bus485Pit.ItemPit> itemList) {
+        if (itemList.size() > 0) {
+            Bus485Pit.ItemPit itemPit = itemList.get(0);
+            onPitSitData(itemPit, 0);
+            this.itemPit = itemPit;
+            refreshCleanessDialogInfo(itemPit);
+        }
+    }
+
+    @Override
+    public void onToiletSmellData(Bus485Pit.ItemGas itemGas, int position) {
+
+    }
+
+    @Override
+    public void onToiletSmellData(Bus485Pit.ItemCommon itemCommon) {
+        ToastUtil.logAndToast(getContext(), "更新厕所异味数据");
+        mBinding.tvManSmell.setText(itemCommon.manSmellLevel + " 级");
+        mBinding.tvWomanSemll.setText(itemCommon.womanSmellLevel + " 级");
+        mBinding.tvDisabledSmell.setText(itemCommon.disabledSmellLevel + " 级");
+        mBinding.ivManWarning.setVisibility(itemCommon.manSmellState ? View.GONE : View.VISIBLE);
+        mBinding.ivWomanWarning.setVisibility(itemCommon.womanSmellState ? View.GONE : View.VISIBLE);
+        mBinding.ivDisabledWarning.setVisibility(itemCommon.disabledSmellState ? View.GONE : View.VISIBLE);
+
+    }
+
+    @Override
+    public void onPitSitData(Bus485Pit.ItemPit itemPit, int position) {
+        this.itemPit = itemPit;
+        mBinding.disablePit.tvGrid.setText(position + 1 + "");
+        mBinding.disablePit.tvWarning.setVisibility(itemPit.work ? View.GONE : View.VISIBLE);
+        mBinding.disablePit.viewGrid.setSelected(itemPit.used);
+        refreshCleanessDialogInfo(itemPit);
+    }
+
+    @Override
+    public void onPitStandData(Bus485Pit.ItemPit itemPit, int position) {
+        Log.e(TAG, "残卫不需要便池数据");
+        return;
+    }
+
+    /**
+     * 显示 清洁度 的dialog
+     *
+     * @param itemPit
+     */
+    private void showCleanessDialog(Bus485Pit.ItemPit itemPit) {
+        dialog = new CleanessDialog(getContext(), itemPit, ONLY_INDEX);
+        dialog.setSinglePitRefreshListener(new CleanessDialog.BtnClickCallback() {
+            @Override
+            public void onItemIndex(int index) {
+                if (getActivity() instanceof PitActivity) {
+                    //TODO BUG 当服务器推数据过来后，itemPit.index的值会被重置为0
+                    ((PitActivity) getActivity()).refreshPit(index);
+                }
+            }
+        });
+        dialog.show();
+        ((PitActivity) getActivity()).refreshPit(ONLY_INDEX);
+
+    }
+
+    /**
+     * 获取 清洁度dialog 的数据后，刷新dialog的页面显示
+     *
+     * @param itemPit
+     */
+    private void refreshCleanessDialogInfo(Bus485Pit.ItemPit itemPit) {
+        if (dialog != null && dialog.isShowing() && dialog.getIndex() == ONLY_INDEX) {
+            dialog.freshItemPitInfo(itemPit);
+        }
+    }
+
+}

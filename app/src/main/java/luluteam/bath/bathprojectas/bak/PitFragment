@@ -1,0 +1,243 @@
+package luluteam.bath.bathprojectas.fragment.pit;
+
+
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import luluteam.bath.bathprojectas.R;
+import luluteam.bath.bathprojectas.activity.PitActivity;
+import luluteam.bath.bathprojectas.adapter.PitGridAdapter;
+import luluteam.bath.bathprojectas.databinding.FragmentPitBinding;
+import luluteam.bath.bathprojectas.model.pit.Bus485Pit;
+import luluteam.bath.bathprojectas.utils.ToastUtil;
+import luluteam.bath.bathprojectas.view.dialog.CleanessDialog;
+
+import static luluteam.bath.bathprojectas.model.pit.Bus485Pit.MAX_PIT;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class PitFragment extends Fragment implements PitActivity.PitDataListener {
+
+    private static final String BUNDLE_KEY_GROUP = "bundle_key_pit_type";
+    private static final String TYPE_MAN = "type_man";
+    private static final String TYPE_WOMAN = "type_woman";
+
+
+    private FragmentPitBinding mBinding;
+    /**
+     * 记录了每一个蹲位数据的List。adapter中保存了对这个实例的引用
+     * 每次收到新的数据，在adapter中更新该list的值，而不是直接指向一个新的地址。
+     * 所以，这个list和adapter显示的list，是同一个数据
+     */
+    private List<Bus485Pit.ItemPit> itemList = new ArrayList<>(MAX_PIT);
+    private PitGridAdapter adapter;
+    private String pitType = "";
+
+    private CleanessDialog dialog;
+
+    public static final String TAG = "PitFragment";
+
+    public PitFragment() {
+        // Required empty public constructor
+    }
+
+
+    /**
+     * 适配男厕的PitFragment
+     *
+     * @return
+     */
+    public static PitFragment getManPitFragment() {
+        Bundle args = new Bundle();
+        args.putString(BUNDLE_KEY_GROUP, TYPE_MAN);
+        PitFragment fragment = new PitFragment();
+        fragment.setArguments(args);
+        //男厕的话，一半蹲位，一半便池
+        for (int i = 0; i < MAX_PIT / 2; i++) {
+//            Bus485Pit.ItemPit itemPit = Bus485Pit.ItemPit.newEmptyInstance(0);
+//            fragment.itemList.add(itemPit);
+        }
+        for (int i = MAX_PIT / 2; i < MAX_PIT; i++) {
+//            Bus485Pit.ItemPit itemPit = Bus485Pit.ItemPit.newEmptyInstance(1);
+//            fragment.itemList.add(itemPit);
+        }
+        return fragment;
+    }
+
+    /**
+     * 适配女厕的PitFragment
+     *
+     * @return
+     */
+    public static PitFragment getWomanPitFragment() {
+        Bundle args = new Bundle();
+        args.putString(BUNDLE_KEY_GROUP, TYPE_WOMAN);
+        PitFragment fragment = new PitFragment();
+        fragment.setArguments(args);
+        //女厕的话，全部蹲位
+        for (int i = 0; i < MAX_PIT; i++) {
+//            Bus485Pit.ItemPit itemPit = Bus485Pit.ItemPit.newEmptyInstance(0);
+//            fragment.itemList.add(itemPit);
+        }
+        return fragment;
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_pit, container, false);
+        pitType = getArguments().getString(BUNDLE_KEY_GROUP);
+        Log.i(TAG, "PitFragment===onCreateView:" + pitType);
+//        adapter = new PitGridAdapter(getContext(), itemList);
+        mBinding.imgGridView.setAdapter(adapter);
+        mBinding.imgGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position < itemList.size()) {
+                    showCleanessDialog(itemList.get(position), position);
+                }
+            }
+        });
+        return mBinding.getRoot();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onPitData(List<Bus485Pit.ItemPit> itemList) {
+        if (adapter == null) {
+            ToastUtil.showLongToast(getContext(), "页面初始化失败，请退出重新打开");
+            return;
+        }
+        adapter.updateData(itemList);
+//        refreshCleanessDialogInfo(itemList);
+
+    }
+
+    @Override
+    public void onToiletSmellData(Bus485Pit.ItemGas itemGas,int pos) {
+        Log.e(TAG, "男女厕不需要厕所异味数据");
+        return;
+    }
+
+    @Override
+    public void onPitSitData(Bus485Pit.ItemPit itemPit, int position) {
+        if (adapter == null) {
+            ToastUtil.showLongToast(getContext(), "页面初始化失败，请退出重新打开 : pitType=" + pitType);
+            return;
+        }
+        adapter.updateData(itemPit, position);
+        refreshCleanessDialogInfo(itemPit, position);
+
+    }
+
+    @Override
+    public void onPitStandData(Bus485Pit.ItemPit itemPit, int position) {
+        if (adapter == null) {
+            ToastUtil.showLongToast(getContext(), "页面初始化失败，请退出重新打开 : pitType=" + pitType);
+            return;
+        }
+        if (TYPE_MAN.equals(pitType)) {
+            adapter.updateData(itemPit, position);
+            refreshCleanessDialogInfo(itemPit, position);
+        } else {
+            Log.e(TAG, "女厕不需要便池数据");
+        }
+    }
+
+    /**
+     * 根据用户点击的item的position，得到该item对应的index
+     *
+     * @param position
+     * @return
+     */
+    private int fromPositionToIndex(int position) {
+        if (TYPE_MAN.equals(pitType)) {
+            return position + 1;
+        } else if (TYPE_WOMAN.equals(pitType)) {
+            return MAX_PIT + position + 1;
+        }
+        return -1;
+    }
+
+    private int fromIndexToPosition(int index) {
+        if (TYPE_MAN.equals(pitType)) {
+            return index - 1;
+        } else if (TYPE_WOMAN.equals(pitType)) {
+            return index - MAX_PIT - 1;
+        }
+        return -1;
+    }
+
+    /**
+     * 显示 清洁度 的dialog
+     *
+     * @param itemPit
+     * @param position
+     */
+    private void showCleanessDialog(Bus485Pit.ItemPit itemPit, int position) {
+
+        int index = fromPositionToIndex(position);
+
+        dialog = new CleanessDialog(getContext(), itemPit, index);
+        dialog.setSinglePitRefreshListener(new CleanessDialog.BtnClickCallback() {
+            @Override
+            public void onItemIndex(int index) {
+                if (getActivity() instanceof PitActivity) {
+                    //TODO BUG 当服务器推数据过来后，itemPit.index的值会被重置为0
+                    ((PitActivity) getActivity()).refreshPit(index);
+                }
+            }
+        });
+        dialog.show();
+        ((PitActivity) getActivity()).refreshPit(index);
+
+    }
+
+    /**
+     * 获取 清洁度dialog 的数据后，刷新dialog的页面显示
+     *
+     * @param itemPit
+     * @param position
+     */
+    private void refreshCleanessDialogInfo(Bus485Pit.ItemPit itemPit, int position) {
+        int index = fromPositionToIndex(position);
+        if (dialog != null && dialog.isShowing() && dialog.getIndex() == index) {
+            dialog.freshItemPitInfo(itemPit);
+        }
+
+    }
+
+    @Deprecated
+    private void refreshCleanessDialogInfo(List<Bus485Pit.ItemPit> itemList) {
+        if (dialog != null && dialog.isShowing()) {
+            int position = fromIndexToPosition(dialog.getIndex());
+            if (position < itemList.size()) {
+                dialog.freshItemPitInfo(itemList.get(position));
+            }
+        }
+
+    }
+
+
+}

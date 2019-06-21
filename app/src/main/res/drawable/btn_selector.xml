@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 单击时的背景图片-->
+    <item android:drawable="@drawable/shap_darkblue_round_corner" android:state_focused="true" android:state_pressed="true" />
+
+    <!--  放在最后  默认时的背景图片-->
+    <item android:drawable="@drawable/shap_primary_round_corner" />
+
+</selector>

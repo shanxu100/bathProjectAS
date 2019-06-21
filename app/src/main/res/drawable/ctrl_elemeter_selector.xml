@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:drawable="@drawable/elemeter_press" android:state_pressed="true"></item>-->
+    <!--<item android:drawable="@drawable/elemeter_default" android:state_selected="true"></item>-->
+    <!--<item android:drawable="@drawable/elemeter_default"></item>-->
+    <item android:drawable="@drawable/static_electricity" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/static_electricity" android:state_selected="true"></item>
+    <item android:drawable="@drawable/static_electricity"></item>
+</selector>

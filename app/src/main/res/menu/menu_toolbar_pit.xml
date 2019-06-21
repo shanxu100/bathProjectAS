@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Main2Activity">
+
+    <item
+        android:id="@+id/action_pit_refresh"
+        android:orderInCategory="100"
+        android:title="刷新状态"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/action_0_refresh"
+        android:orderInCategory="100"
+        android:title="刷新数量"
+        app:showAsAction="always|withText" />
+    <item
+        android:id="@+id/action_2_refresh"
+        android:orderInCategory="100"
+        android:title="刷新坑位"
+        app:showAsAction="never|withText" />
+    <item
+        android:id="@+id/action_3_refresh"
+        android:orderInCategory="100"
+        android:title="刷新气体"
+        app:showAsAction="never|withText" />
+
+
+</menu>

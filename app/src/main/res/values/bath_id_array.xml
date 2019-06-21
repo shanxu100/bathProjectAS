@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="BathID">
+        <item>12345678</item>
+        <item>00000001</item>
+    </string-array>
+</resources>

@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+
+        applicationId "luluteam.bath.bathprojectas"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 48
+        versionName "1.48-2019-06-20"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    //如果引用的第三方库的支持库版本低于（或者不一致）app build.gradle中的支持库版本
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion '25.3.1'
+                }
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    repositories {
+        maven {
+            url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+        }
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+        maven { url "https://jitpack.io" }
+        maven {
+            url "https://repo.eclipse.org/content/repositories/paho-snapshots/"
+        }
+        //   TC
+        mavenCentral()
+        jcenter()
+//        google()
+
+        maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
+    }
+}
+
+dependencies {
+    implementation 'com.android.support:support-v4:25.4.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:25.4.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    //    compile 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
+    //    compile 'com.koushikdutta.async:androidasync:2.+'
+    //    SL
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    implementation 'com.github.ybq:Android-SpinKit:1.2.0'
+    //    TC
+    implementation 'com.android.support:recyclerview-v7:25.4.0'
+    implementation 'io.crossbar.autobahn:autobahn-android:17.10.5'
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'commons-lang:commons-lang:2.6'
+    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.1.0'
+    implementation('com.github.hotchemi:permissionsdispatcher:3.1.0') {
+        // if you don't use android.app.Fragment you can exclude support for them
+        exclude module: "support-v13"
+    }
+    annotationProcessor "com.github.hotchemi:permissionsdispatcher-processor:3.1.0"
+    implementation 'liji.library.dev:citypickerview:3.1.5'
+
+    implementation 'com.hikvision.ezviz:ezuikit:2.0'
+
+}

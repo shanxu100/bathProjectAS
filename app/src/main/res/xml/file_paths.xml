@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+
+    <files-path
+        name="file_path"
+        path="/storage/emulated/0/" />
+    <external-path
+        name="external_storage_root"
+        path="." />
+    <!--代表外部存储区域的根目录下的文件 Environment.getExternalStorageDirectory()/DCIM/bathPics目录-->
+    <external-path
+        name="hm_DCIM"
+        path="DCIM/Camera" />
+    <cache-path
+        name="cache_path"
+        path="." />
+
+</paths>

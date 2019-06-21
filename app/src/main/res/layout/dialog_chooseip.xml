@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/mydiabg"
+    android:orientation="vertical"
+
+    >
+
+
+    <RelativeLayout
+        android:id="@+id/toprl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/groupnameet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="选择环境"
+            android:textColor="@color/blue"
+            android:textSize="25sp" />
+
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/groupnameet">
+
+            <RadioButton
+                android:id="@+id/testServer_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试服务器"
+                android:textColor="@color/black"></RadioButton>
+
+            <RadioButton
+                android:id="@+id/testServer_rb2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试服务器2"
+                android:textColor="@color/black"></RadioButton>
+
+            <RadioButton
+                android:id="@+id/claudyServer_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="克劳迪服务器"
+                android:textColor="@color/black"
+                android:enabled="true"></RadioButton>
+
+            <RadioButton
+                android:id="@+id/aliCloudServer_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="阿里云服务器"
+                android:textColor="@color/black"></RadioButton>
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/tencentCloudServer_rb"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="腾讯云服务器"-->
+            <!--android:textColor="@color/black"></RadioButton>-->
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/bottomoll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toprl"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/lightgrey" />
+
+        <Button
+            android:id="@+id/acceptbtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="15dp"
+            android:text="确定"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>

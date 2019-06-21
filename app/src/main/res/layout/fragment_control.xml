@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/CtrlBathInfoBG">
+
+    <RelativeLayout
+        android:id="@+id/can_slide_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/can_gone_ll"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/allStaticData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:padding="5dp"
+                    android:background="@color/CtrlTextBG"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_data"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="  数据分析"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:id="@+id/btn_video"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/tv_data"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@+id/tv_data"
+                        android:background="@drawable/selector_video" />
+                </RelativeLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/elecMeter_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ctrl_data_analysis"
+                        android:orientation="horizontal">
+
+                        <Button
+                            style="@style/fragmentCtrlPicture"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ctrl_elemeter_selector" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.2"
+                                android:text="电表读数"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/elecMeterTv"
+                                style="@style/fragmentCtrlText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="0" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/waterMeter_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ctrl_data_analysis"
+                        android:orientation="horizontal">
+
+                        <Button
+                            style="@style/fragmentCtrlPicture"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ctrl_watermeter_selector" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.2"
+                                android:text="水表读数"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/waterMeterTv"
+                                style="@style/fragmentCtrlText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="0" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/body_flow_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ctrl_data_analysis"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <Button
+                            style="@style/fragmentCtrlPicture"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ctrl_people_sum_selector" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.2"
+                                android:text="人流量"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/bodyDetectorTv"
+                                style="@style/fragmentCtrlText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="0" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/peculiarSmell_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ctrl_data_analysis"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <Button
+                            style="@style/fragmentCtrlPicture"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ctrl_gas_selector" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.2"
+                                android:text="空气质量"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/gas_level_tv"
+                                style="@style/fragmentCtrlText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="优" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/cleanliness_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_ctrl_data_analysis"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:orientation="horizontal">
+
+                        <Button
+                            style="@style/fragmentCtrlPicture"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/ctrl_clear_selector" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1.2"
+                                android:text="清洁度"
+                                android:textAlignment="center"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/cleanliness_level_tv"
+                                style="@style/fragmentCtrlText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="优" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bathImageInfo_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/allStaticData"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3px"
+                    android:background="@color/CtrlTextBG" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/toiletInfo_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@color/CtrlBathInfoBG"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_video"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/CtrlTextBG"
+                            android:text="  厕所信息" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/toiletInfo_img"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/add_img" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/toiletState_ll"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="3dp"
+                        android:layout_weight="1"
+                        android:background="@color/CtrlBathInfoBG"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/CtrlTextBG"
+                            android:text="  当前状态" />
+
+                        <ImageView
+                            android:id="@+id/toiletState_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_margin="3dp"
+                            android:src="@drawable/ctrl_toilet_state00000001" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/can_gone_ll"
+            android:background="@color/CtrlBathInfoBG"
+            android:orientation="vertical"
+            android:id="@+id/remote_control_ll">
+
+            <RelativeLayout
+                android:id="@+id/rl_remoteCtrlShow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@color/CtrlTextBG">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="  远程控制"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:background="@color/CtrlTextBG" />
+
+                <ImageView
+                    android:id="@+id/iv_arrow_up"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/iv_up_press" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="远程控制总开关:"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <ToggleButton
+                    android:id="@+id/allControlled_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toRightOf="@+id/textView"
+                    android:background="@drawable/setting_toggle_button"
+                    android:gravity="center_horizontal"
+                    android:maxHeight="15dp"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/lockToilet_btn"
+                    android:text="锁:"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <ToggleButton
+                    android:id="@+id/lockToilet_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_toLeftOf="@id/refreshState_btn"
+                    android:background="@drawable/setting_toggle_button"
+                    android:gravity="center_horizontal"
+                    android:maxHeight="15dp"
+                    android:textOff=""
+                    android:textOn="" />
+
+                <Button
+                    android:id="@+id/refreshState_btn"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/control_update_btn_selector"
+                    android:padding="10dp"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3px"
+                android:layout_marginTop="5dp"
+                android:background="@color/blue" />
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/remoteCtrl_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/CtrlBathInfoBG"
+                app:tabIndicatorColor="@color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/can_slide_ll"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+

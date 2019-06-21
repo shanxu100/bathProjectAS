@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hotCity_tablelayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:divider="@color/gray"
+    android:dividerPadding="1dp"
+    android:showDividers="middle|beginning|end">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="热门城市："
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/gray"
+        android:orientation="horizontal"
+        android:showDividers="middle|beginning|end">
+
+        <Button
+            android:id="@+id/btn_hotcity_0"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_click_btn"
+            android:tag="北京市-北京市"
+            android:text="北京市" />
+
+
+        <Button
+            android:id="@+id/btn_hotcity_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_click_btn"
+            android:tag="上海市-上海市"
+            android:text="上海市" />
+
+        <Button
+            android:id="@+id/btn_hotcity_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_click_btn"
+            android:maxWidth="50dp"
+            android:tag="广东省-广州市"
+            android:text="广州市" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_weight="1"
+        android:divider="@color/gray"
+        android:orientation="horizontal"
+        android:showDividers="middle|beginning|end">
+
+        <Button
+            android:id="@+id/btn_hotcity_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_click_btn"
+            android:tag="浙江省-杭州市"
+            android:text="杭州市" />
+
+
+        <Button
+            android:id="@+id/btn_hotcity_4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/selector_click_btn"
+            android:tag="广东省-深圳市"
+            android:text="深圳市" />
+
+        <Button
+            android:id="@+id/btn_hotcity_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_click_btn"
+            android:maxWidth="50dp"
+            android:tag="广东省-中山市"
+            android:text="中山市" />
+    </TableRow>
+
+</TableLayout>

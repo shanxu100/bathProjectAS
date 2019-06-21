@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/container"
+    tools:context="luluteam.bath.bathprojectas.bak.ControlActivity">
+
+    <!--android:background="@drawable/app_background"-->
+
+
+    <!--&lt;!&ndash;网络状态提示框&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/websocketstate_ll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/lightred"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:visibility="gone">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="25dp"-->
+    <!--android:layout_height="25dp"-->
+    <!--android:src="@drawable/offline" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:text="websocket连接异常"-->
+    <!--android:textColor="@color/black" />-->
+
+    <!--</LinearLayout>-->
+    <!--&lt;!&ndash;网络状态提示框&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:id="@+id/mqttstate_ll"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/lightred"-->
+    <!--android:gravity="center"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingTop="5dp"-->
+    <!--android:visibility="gone">-->
+
+    <!--<ImageView-->
+    <!--android:layout_width="25dp"-->
+    <!--android:layout_height="25dp"-->
+    <!--android:src="@drawable/offline" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:text="mqtt连接异常"-->
+    <!--android:textColor="@color/black" />-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="5dp">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/textView"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentStart="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:text="远程控制总开关:"-->
+    <!--android:textAlignment="center"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="20dp" />-->
+
+    <!--<ToggleButton-->
+    <!--android:id="@+id/allControlled_btn"-->
+    <!--android:layout_width="70dp"-->
+    <!--android:layout_height="35dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_toRightOf="@+id/textView"-->
+    <!--android:background="@drawable/setting_toggle_button"-->
+    <!--android:gravity="center_horizontal"-->
+    <!--android:maxHeight="15dp"-->
+    <!--android:textOff=""-->
+    <!--android:textOn="" />-->
+
+    <!--<Button-->
+    <!--android:id="@+id/refreshState_btn"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:background="@drawable/function_button"-->
+    <!--android:padding="10dp"-->
+    <!--android:text="刷新"-->
+    <!--android:textSize="15dp" />-->
+    <!--</RelativeLayout>-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="3px"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:background="@color/blue" />-->
+
+
+    <!--<android.support.design.widget.TabLayout-->
+    <!--android:id="@+id/remoteCtrl_tab"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:tabSelectedTextColor="@color/orange"-->
+    <!--app:tabTextColor="@color/gray_text" />-->
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1dp"-->
+    <!--android:background="@color/gray" />-->
+
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/container"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_weight="1" />-->
+</LinearLayout>
+

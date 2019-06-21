@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="currentBinding"
+            type="luluteam.bath.bathprojectas.model.binding.ParamsInfoBinding" />
+    </data>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="false"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/setAll_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="一键设置"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/weather_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/selector_click_btn"
+                    android:text="刷新天气与基本信息" />
+
+                <Button
+                    android:id="@+id/defaultAll_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/refreshAll_btn"
+                    android:background="@drawable/selector_click_btn"
+                    android:layout_marginLeft="5dp"
+                    android:text="恢复默认设置" />
+
+                <Button
+                    android:id="@+id/refreshAll_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/selector_click_btn"
+                    android:text="刷新" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_area"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/chart_item_title_bg"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="采集卡参数设置"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <CheckBox
+                        android:id="@+id/systemTime_cb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="采用系统时间" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:id="@+id/timesettv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="时间设置:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/cardTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:text="@={currentBinding.time}"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <Button
+                        android:id="@+id/cardTime_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_click_btn"
+                        android:text="确定" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_area"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/chart_item_title_bg"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="光照探头参数设置"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="厕所选择:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <Spinner
+                        android:id="@+id/lightDetector_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown" />
+                    <!--<luluteam.bath.bathprojectas.view.spinner.JJYSpinner-->
+                    <!--android:id="@+id/lightDetector_spinner"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="@dimen/fragment_text_size"-->
+                    <!--android:hint="请选择厕所类型：" />-->
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="阈值设定:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/lightDetector_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.thresholdLight.thresholdValue}"
+                        android:hint="请输入："
+                        android:inputType="number"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size"
+                        android:focusableInTouchMode="true" />
+
+                    <Button
+                        android:id="@+id/lightDetector_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_click_btn"
+                        android:text="确定" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_area"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/chart_item_title_bg"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="5dp"
+                        android:text="定时器参数设置"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="厕所选择:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <Spinner
+                        android:id="@+id/timer_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dropdown" />
+                    <!--<luluteam.bath.bathprojectas.view.spinner.JJYSpinner-->
+                    <!--android:id="@+id/timer_spinner"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textSize="@dimen/fragment_text_size"-->
+                    <!--android:hint="请选择厕所类型：" />-->
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/lightgrey" />
+
+                <!--灯光定时器-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="灯光定时器"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/fragment_text_size" />
+
+                <!--辅灯-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="辅灯" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="开始时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/fudeng_startTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerLight.startTime}"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="结束时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/fudeng_endTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerLight.stopTime}"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size" />
+                </LinearLayout>
+
+                <!--主灯-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="主灯" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="延时时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/zhudeng_delayTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerLight.duration}"
+                        android:hint="时间单位为分钟"
+                        android:inputType="number"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size"
+                        android:focusableInTouchMode="true" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/lightTimer_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/selector_click_btn"
+                    android:text="确定" />
+
+                <!--音响定时器-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/lightgrey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="音响定时器"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/fragment_text_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="开始时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/audioTimer_startTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerAudio.startTime}"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="结束时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/audioTimer_endTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerAudio.stopTime}"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="延时时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/audioTimer_delayTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerAudio.duration}"
+                        android:hint="时间单位为分钟"
+                        android:inputType="number"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size"
+                        android:focusableInTouchMode="true" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/audioTimer_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/selector_click_btn"
+                    android:text="确定" />
+
+
+                <!--消毒定时器-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/lightgrey" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="消毒定时器"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/fragment_text_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="开始时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/xiaodu_startTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerSterilamp.startTime}"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="结束时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/xiaodu_endTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerSterilamp.stopTime}"
+                        android:hint="请输入"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="延时时间:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/xiaodu_delayTime_et"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:background="@drawable/shape_input"
+                        android:text="@={currentBinding.group.timerSterilamp.duration}"
+                        android:hint="时间单位为分钟"
+                        android:inputType="number"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size"
+                        android:focusableInTouchMode="true" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/xiaodu_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/selector_click_btn"
+                    android:text="确定" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_area"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/chart_item_title_bg"
+                    android:padding="5dp"
+                    android:text="水表校正值设置"
+                    android:textSize="@dimen/fragment_text_size" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/adjusted_value_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center_horizontal"
+                        android:text="水表校正值:"
+                        android:textSize="@dimen/fragment_text_size" />
+
+                    <EditText
+                        android:id="@+id/adjusted_value_et"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_input"
+                        android:hint="请输入："
+                        android:layout_below="@+id/adjusted_value_tv"
+                        android:layout_toLeftOf="@+id/adjusted_value_btn"
+                        android:layout_alignParentLeft="true"
+                        android:inputType="numberSigned|numberDecimal"
+                        android:paddingBottom="4dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:paddingTop="4dp"
+                        android:textSize="@dimen/fragment_text_size"
+                        android:focusableInTouchMode="true" />
+
+                    <Button
+                        android:id="@+id/adjusted_value_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/selector_click_btn"
+                        android:layout_toLeftOf="@+id/refresh_value_btn"
+                        android:text="确定" />
+
+                    <Button
+                        android:id="@+id/refresh_value_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/selector_click_btn"
+                        android:text="刷新" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</layout>
+

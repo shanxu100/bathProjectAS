@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:drawable="@drawable/people_sum_press" android:state_pressed="true"></item>-->
+    <!--<item android:drawable="@drawable/people_sum_default" android:state_selected="true"></item>-->
+    <!--<item android:drawable="@drawable/people_sum_default"></item>-->
+    <item android:drawable="@drawable/static_peoplenum" android:state_pressed="true"></item>
+    <item android:drawable="@drawable/static_peoplenum" android:state_selected="true"></item>
+    <item android:drawable="@drawable/static_peoplenum"></item>
+</selector>

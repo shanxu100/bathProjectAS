@@ -1,0 +1,640 @@
+package luluteam.bath.bathprojectas.fragment.setting;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.text.InputType;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+import luluteam.bath.bathprojectas.R;
+import luluteam.bath.bathprojectas.constants.APPConstant;
+import luluteam.bath.bathprojectas.constants.WebConstant;
+import luluteam.bath.bathprojectas.fragment.main.ManageSetFragment;
+import luluteam.bath.bathprojectas.model.ParamsInfo;
+import luluteam.bath.bathprojectas.utils.DensityUtil;
+import luluteam.bath.bathprojectas.utils.TimeUtil;
+import luluteam.bath.bathprojectas.utils.ToastUtil;
+import luluteam.bath.bathprojectas.utils.okhttp.OkHttpManager;
+import luluteam.bath.bathprojectas.view.dialog.datePickDialog.DatePick;
+import luluteam.bath.bathprojectas.view.dialog.datePickDialog.DatePickDialog;
+
+/**
+ * Created by 123 on 2017/11/16.
+ */
+@Deprecated
+public class DeviceSettingFragment extends Fragment implements ManageSetFragment.ParamsCallback {
+
+    /**
+     * 一键系列
+     */
+//一键设置全部
+//    private CheckBox setAll_cb;
+    //一键恢复默认设置
+    private Button defaultAll_btn;
+    private Button refreshAll_btn;
+
+    /**
+     * 采集卡系列
+     */
+//采用系统时间
+    private CheckBox systemTime_cb;
+    //采集卡用户输入时间
+    private EditText cardTime_et;
+    //采集卡确定提交时间
+    private Button cardTime_btn;
+
+    /**
+     * 光照探头系列
+     */
+//探头厕所类型选择
+    private Spinner lightDetector_spinner;
+    //探头阈值设定
+    private EditText lightDetector_et;
+    //探头确定设置
+    private Button lightDetector_btn;
+
+    /**
+     * 定时器系列
+     */
+//定时器厕所类型选择
+    private Spinner timer_spinner;
+    //辅灯开始时间
+    private EditText fudeng_startTime_et;
+    //辅灯结束时间
+    private EditText fudeng_endTime_et;
+    //主灯延时时间
+    private EditText zhudeng_delayTime_et;
+    //音响开始时间
+    private EditText audioTimer_startTime_et;
+    //音响结束时间
+    private EditText audioTimer_endTime_et;
+    //音响延时时间
+    private EditText audioTimer_delayTime_et;
+    //消毒开始时间
+    private EditText xiaodu_startTime_et;
+    //消毒结束时间
+    private EditText xiaodu_endTime_et;
+    //消毒延时时间
+    private EditText xiaodu_delayTime_et;
+    //灯确定
+    private Button lightTimer_btn;
+    //音响确定
+    private Button audioTimer_btn;
+    //消毒确定
+    private Button xiaodu_btn;
+
+    private EditText adjusted_value_et;
+    private Button adjusted_value_btn;
+
+    private Context mContext;
+
+    //用来接收socket的数据参数
+    private ParamsInfo paramsInfo;
+    private final String[] toiletItem = {"男厕", "女厕", "残卫"};
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_device_setting, container, false);
+        mContext = getContext();
+        initView(view);
+        setChooseTime();
+        return view;
+    }
+
+    private void initView(View view) {
+//        setAll_cb = (CheckBox) view.findViewById(R.id.setAll_cb);
+        defaultAll_btn = (Button) view.findViewById(R.id.defaultAll_btn);
+        refreshAll_btn = (Button) view.findViewById(R.id.refreshAll_btn);
+
+        systemTime_cb = (CheckBox) view.findViewById(R.id.systemTime_cb);
+        cardTime_et = (EditText) view.findViewById(R.id.cardTime_et);
+        cardTime_btn = (Button) view.findViewById(R.id.cardTime_btn);
+
+        lightDetector_spinner = (Spinner) view.findViewById(R.id.lightDetector_spinner);
+        lightDetector_et = (EditText) view.findViewById(R.id.lightDetector_et);
+        lightDetector_btn = (Button) view.findViewById(R.id.lightDetector_btn);
+
+        timer_spinner = (Spinner) view.findViewById(R.id.timer_spinner);
+        fudeng_startTime_et = (EditText) view.findViewById(R.id.fudeng_startTime_et);
+        fudeng_endTime_et = (EditText) view.findViewById(R.id.fudeng_endTime_et);
+        zhudeng_delayTime_et = (EditText) view.findViewById(R.id.zhudeng_delayTime_et);
+        lightTimer_btn = (Button) view.findViewById(R.id.lightTimer_btn);
+
+        audioTimer_startTime_et = (EditText) view.findViewById(R.id.audioTimer_startTime_et);
+        audioTimer_endTime_et = (EditText) view.findViewById(R.id.audioTimer_endTime_et);
+        audioTimer_delayTime_et = (EditText) view.findViewById(R.id.audioTimer_delayTime_et);
+        audioTimer_btn = (Button) view.findViewById(R.id.audioTimer_btn);
+
+        xiaodu_startTime_et = (EditText) view.findViewById(R.id.xiaodu_startTime_et);
+        xiaodu_endTime_et = (EditText) view.findViewById(R.id.xiaodu_endTime_et);
+        xiaodu_delayTime_et = (EditText) view.findViewById(R.id.xiaodu_delayTime_et);
+        xiaodu_btn = (Button) view.findViewById(R.id.xiaodu_btn);
+
+        adjusted_value_et = (EditText) view.findViewById(R.id.adjusted_value_et);
+        adjusted_value_btn = (Button) view.findViewById(R.id.adjusted_value_btn);
+
+
+        /**
+         * 初始化Usage的Spinner的value
+         *
+         */
+        List<String> list = Arrays.asList(toiletItem);
+        ArrayAdapter adapter = new ArrayAdapter(mContext, android.R.layout.simple_spinner_item, list);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lightDetector_spinner.setDropDownVerticalOffset(DensityUtil.dip2px(mContext, 20));
+        lightDetector_spinner.setAdapter(adapter);
+        timer_spinner.setAdapter(adapter);
+        timer_spinner.setDropDownVerticalOffset(DensityUtil.dip2px(mContext, 20));
+
+        setSomeListener();
+
+    }
+
+    /**
+     * 添加Listener
+     */
+    private void setSomeListener() {
+        //一键批量设置
+//        setAll_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//
+//            }
+//        });
+
+        //恢复默认设置
+        defaultAll_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDefaultAll();
+            }
+        });
+
+        //刷新，获取参数阈值
+        refreshAll_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshParams();
+            }
+        });
+
+        //设置系统时钟——采用系统时间
+        systemTime_cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    //禁用用户设置采集卡时间
+                    cardTime_et.setEnabled(false);
+                } else {
+                    //启用用户设置采集卡时间
+                    cardTime_et.setEnabled(true);
+                }
+            }
+        });
+
+        //设置系统时钟
+        cardTime_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSystemTime();
+            }
+        });
+
+        //设置探头阈值
+        lightDetector_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLightDetector();
+            }
+        });
+
+        //设置定时器参数
+        View.OnClickListener timerListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.lightTimer_btn:
+                        setTimer("L");
+                        break;
+                    case R.id.audioTimer_btn:
+                        setTimer("M");
+                        break;
+                    case R.id.xiaodu_btn:
+                        setTimer("N");
+                        break;
+                }
+            }
+        };
+        audioTimer_btn.setOnClickListener(timerListener);
+        xiaodu_btn.setOnClickListener(timerListener);
+        lightTimer_btn.setOnClickListener(timerListener);
+
+        //设置水表校正值
+        adjusted_value_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setWaterAdjustedValue();
+            }
+        });
+    }
+
+
+    /**
+     * 1、设置采集卡校准系统时间
+     */
+    private void setSystemTime() {
+        HashMap<String, String> map = new HashMap<>();
+        String time = "";
+        map.put("toiletId", APPConstant.TOILETID);
+        map.put("isBroadcast", "false");
+
+        //true采用系统时间，false则采用用户输入的时间
+        if (!systemTime_cb.isChecked()) {
+            time = cardTime_et.getText().toString();
+            map.put("time", time);
+        }
+
+        OkHttpManager.CommonPostAsyn(WebConstant.SET_SYSTEM_CLOCK, map, new OkHttpManager.ResultCallback() {
+            @Override
+            public void onCallBack(OkHttpManager.State state, String result) {
+                System.out.println(result);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (state == OkHttpManager.State.SUCCESS) {
+                            ToastUtil.showShortToast(mContext, "设置成功！");
+
+                        } else {
+                            ToastUtil.showShortToast(mContext, "设置失败：" + result);
+                        }
+                    }
+                });
+
+
+            }
+        });
+    }
+
+
+    /**
+     * 2、设置探头:光照探头
+     */
+    private void setLightDetector() {
+        String value = lightDetector_et.getText().toString();
+        String usage = APPConstant.UsageMap.get(lightDetector_spinner.getSelectedItem());
+        if (StringUtils.isEmpty(value) || StringUtils.isEmpty(usage)) {
+            ToastUtil.showShortToast(mContext, "请输入数值！！");
+            return;
+        }
+        HashMap<String, String> map = new HashMap<>();
+        map.put("toiletId", APPConstant.TOILETID);
+        map.put("usage", usage);
+        map.put("deviceType", "J");
+        map.put("value", value);
+        map.put("isBroadcast", "false");
+        OkHttpManager.CommonPostAsyn(WebConstant.SET_THRESHOLD, map, new OkHttpManager.ResultCallback() {
+            @Override
+            public void onCallBack(OkHttpManager.State state, String result) {
+                System.out.println(result);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (state == OkHttpManager.State.SUCCESS) {
+                            ToastUtil.showShortToast(mContext, "设置成功！");
+
+                        } else {
+                            ToastUtil.showShortToast(mContext, "设置失败：" + result);
+                        }
+                    }
+                });
+
+            }
+        });
+
+
+    }
+
+    /**
+     * 根据输入的设备类型，设置相应的开始，结束，延时，时间
+     *
+     * @param deviceType L,M,N
+     */
+    private void setTimer(String deviceType) {
+        String startTime = "";
+        String endTime = "";
+        String delayTime = "";
+        switch (deviceType) {
+            case "L":
+                startTime = fudeng_startTime_et.getText().toString();
+                endTime = fudeng_endTime_et.getText().toString();
+                delayTime = zhudeng_delayTime_et.getText().toString();
+                break;
+            case "M":
+                startTime = audioTimer_startTime_et.getText().toString();
+                endTime = audioTimer_endTime_et.getText().toString();
+                delayTime = audioTimer_delayTime_et.getText().toString();
+                break;
+            case "N":
+                startTime = xiaodu_startTime_et.getText().toString();
+                endTime = xiaodu_endTime_et.getText().toString();
+                delayTime = xiaodu_delayTime_et.getText().toString();
+                break;
+        }
+        String usage = APPConstant.UsageMap.get(timer_spinner.getSelectedItem().toString());
+        if ("".equals(startTime) || "".equals(endTime) || "".equals(delayTime)) {
+            ToastUtil.showShortToast(mContext, "请输入数值！");
+        } else {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("toiletId", APPConstant.TOILETID);
+            map.put("usage", usage);
+            map.put("deviceType", deviceType);
+            map.put("time", Integer.parseInt(delayTime) * 60 + "");
+            map.put("startTime", startTime);
+            map.put("stopTime", endTime);
+            map.put("isBroadcast", "false");
+            OkHttpManager.CommonPostAsyn(WebConstant.SET_TIMER, map, new OkHttpManager.ResultCallback() {
+                @Override
+                public void onCallBack(OkHttpManager.State state, String result) {
+                    System.out.println(result);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (state == OkHttpManager.State.SUCCESS) {
+                                ToastUtil.showShortToast(mContext, "设置成功！");
+                            } else {
+                                ToastUtil.showShortToast(mContext, "设置失败：" + result);
+                            }
+                        }
+                    });
+
+                }
+            });
+        }
+    }
+
+    /**
+     * 4、一键恢复默认设置
+     */
+    private void setDefaultAll() {
+        HashMap<String, String> map = new HashMap<>();
+        map.put("toiletId", APPConstant.TOILETID);
+        map.put("isBroadcast", "false");
+        OkHttpManager.CommonPostAsyn(WebConstant.SET_DEFAULT_ALL, map, new OkHttpManager.ResultCallback() {
+            @Override
+            public void onCallBack(OkHttpManager.State state, String result) {
+                System.out.println(result);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (state == OkHttpManager.State.SUCCESS) {
+                            ToastUtil.showShortToast(mContext, "设置成功！");
+
+                        } else {
+                            ToastUtil.showShortToast(mContext, "设置失败：" + result);
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    //刷新，获取参数阈值
+    private void refreshParams() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("toiletId", APPConstant.TOILETID);
+        params.put("isBroadcast", "false");
+        OkHttpManager.CommonPostAsyn(WebConstant.GET_PARAMS, params, new OkHttpManager.ResultCallback() {
+            @Override
+            public void onCallBack(OkHttpManager.State state, String result) {
+
+            }
+        });
+    }
+
+    /**
+     * 设置水表校正值
+     */
+    private void setWaterAdjustedValue() {
+        String value = adjusted_value_et.getText().toString();
+        if (StringUtils.isEmpty(value)) {
+            ToastUtil.showLongToast(mContext, "数值不能为空");
+            return;
+        }
+        HashMap<String, String> params = new HashMap<>();
+        params.put("toiletId", APPConstant.TOILETID);
+        params.put("value", value);
+        params.put("isBroadcast", "false");
+        OkHttpManager.CommonPostAsyn(WebConstant.SET_WATER_ADJUSTED_VALUE, params, new OkHttpManager.ResultCallback() {
+            @Override
+            public void onCallBack(OkHttpManager.State state, String result) {
+                System.out.println(result);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (state == OkHttpManager.State.SUCCESS) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(result);
+                                if (Boolean.parseBoolean(jsonObject.get("result").toString())) {
+                                    ToastUtil.showShortToast(mContext, "设置成功~！");
+                                } else {
+                                    ToastUtil.showLongToast(mContext, "设置失败: " + result);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else {
+                            ToastUtil.showShortToast(mContext, "设置失败：" + result);
+                        }
+                    }
+                });
+
+            }
+
+
+        });
+    }
+
+
+    //=================================================================================
+    //
+    //=================================================================================
+
+    /**
+     * 对一些需要 选择时间 的EditText,使用该方法
+     */
+    private void setChooseTime() {
+        /**
+         * 始终禁止editText弹出软键盘
+         */
+        fudeng_startTime_et.setInputType(InputType.TYPE_NULL);
+        fudeng_endTime_et.setInputType(InputType.TYPE_NULL);
+        xiaodu_startTime_et.setInputType(InputType.TYPE_NULL);
+        xiaodu_endTime_et.setInputType(InputType.TYPE_NULL);
+        audioTimer_startTime_et.setInputType(InputType.TYPE_NULL);
+        audioTimer_endTime_et.setInputType(InputType.TYPE_NULL);
+        cardTime_et.setInputType(InputType.TYPE_NULL);
+        /**
+         * 弹出DatePicker
+         */
+        setEditTextFocus(cardTime_et, DatePick.TYPE_ALL);
+        setEditTextFocus(fudeng_startTime_et, DatePick.TYPE_ONLYTIME);
+        setEditTextFocus(fudeng_endTime_et, DatePick.TYPE_ONLYTIME);
+        setEditTextFocus(xiaodu_startTime_et, DatePick.TYPE_ONLYTIME);
+        setEditTextFocus(xiaodu_endTime_et, DatePick.TYPE_ONLYTIME);
+        setEditTextFocus(audioTimer_startTime_et, DatePick.TYPE_ONLYTIME);
+        setEditTextFocus(audioTimer_endTime_et, DatePick.TYPE_ONLYTIME);
+    }
+
+    private void setEditTextFocus(EditText editText, int type) {
+        editText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editText.isFocused()) {
+                    showDatePickDialog(editText, type);
+                }
+            }
+        });
+        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (editText.isFocused()) {
+                    showDatePickDialog(editText, type);
+                }
+            }
+        });
+    }
+
+    private void showDatePickDialog(EditText editText, int type) {
+        DatePickDialog.Builder builder = new DatePickDialog.Builder(mContext);
+        DatePickDialog dialog = builder.build();
+        builder.setTitle("日期时间选择框")
+                .setDatePickType(type)
+                .setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DatePick pick = dialog.getPick();
+                        editText.setText(pick.getResultDate());
+//                        ToastUtil.showShortToast(mContext,pick.getResultDate());
+                        dialog.dismiss();
+                    }
+                })
+                .setCancelButton("取消", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+        dialog.show();
+    }
+
+
+    //==============================================================================
+    //更新参数阈值
+    //==============================================================================
+
+    /**
+     * 更新参数阈值
+     *
+     * @param paramsInfo
+     */
+    @Override
+    public void setParamsBySocket(ParamsInfo paramsInfo) {
+        System.out.println("更新全体参数阈值：" + Thread.currentThread().toString() + " " + paramsInfo.toJson());
+        this.paramsInfo = paramsInfo;
+
+        updateSystemTime(paramsInfo.getValue().getSystemClock());
+
+        updateThresholdLight(lightDetector_spinner.getSelectedItemPosition());
+
+        updateTimer(timer_spinner.getSelectedItemPosition());
+    }
+
+
+    /**
+     * 设置系统时间
+     *
+     * @param yyMMddHHmmss
+     */
+    private void updateSystemTime(String yyMMddHHmmss) {
+        /**
+         * 设置系统时间
+         */
+        try {
+            String newTime = TimeUtil.getTime(yyMMddHHmmss, "yyMMddHHmmss", "yyyy-MM-dd'T'HH:mm:ss");
+            cardTime_et.setText(newTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置光照探头阈值，以及定时器相关参数的设定
+     *
+     * @param position 男厕，女厕，殘卫
+     */
+    private void updateThresholdLight(int position) {
+        if (paramsInfo == null) {
+            return;
+        }
+        if (position == 0) {
+            lightDetector_et.setText(paramsInfo.getValue().getGroupMan().getThresholdLight() + "");
+        } else if (position == 1) {
+            lightDetector_et.setText(paramsInfo.getValue().getGroupWoman().getThresholdLight() + "");
+        } else if (position == 2) {
+            lightDetector_et.setText(paramsInfo.getValue().getGroupDisabled().getThresholdLight() + "");
+        }
+    }
+
+    /**
+     * 更新定时器
+     *
+     * @param position
+     */
+    private void updateTimer(int position) {
+        if (paramsInfo == null) {
+            return;
+        }
+        ParamsInfo.Group group = null;
+        if (position == 0) {
+            group = paramsInfo.getValue().getGroupMan();
+        } else if (position == 1) {
+            group = paramsInfo.getValue().getGroupWoman();
+        } else if (position == 2) {
+            group = paramsInfo.getValue().getGroupDisabled();
+        }
+
+        fudeng_startTime_et.setText(TimeUtil.secondToHHmmss(group.getTimerLight().getStartTime()) + "");
+        fudeng_endTime_et.setText(TimeUtil.secondToHHmmss(group.getTimerLight().getStopTime()) + "");
+        zhudeng_delayTime_et.setText((group.getTimerLight().getDuration_s() / 60) + "");
+        audioTimer_startTime_et.setText(TimeUtil.secondToHHmmss(group.getTimerAudio().getStartTime()) + "");
+        audioTimer_endTime_et.setText(TimeUtil.secondToHHmmss(group.getTimerAudio().getStopTime()) + "");
+        audioTimer_delayTime_et.setText((group.getTimerAudio().getDuration_s() / 60) + "");
+        xiaodu_startTime_et.setText(TimeUtil.secondToHHmmss(group.getTimerSterilamp().getStartTime()) + "");
+        xiaodu_endTime_et.setText(TimeUtil.secondToHHmmss(group.getTimerSterilamp().getStopTime()) + "");
+        xiaodu_delayTime_et.setText((group.getTimerSterilamp().getDuration_s() / 60) + "");
+    }
+
+
+}

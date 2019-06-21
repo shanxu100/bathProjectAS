@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp">
+
+    <TextView
+        android:id="@+id/line_chart_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/chart_item_title_text"
+        android:background="@color/CtrlTextBG"
+        android:paddingLeft="@dimen/chart_item_title_padding"
+        android:textSize="@dimen/fragment_text_size"
+        android:gravity="left"
+        android:text="title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/line_chart_refreshtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:id="@+id/line_chart_last_refresh_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="秒前更新（北京时间）"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/line_chart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center_horizontal" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/line_chart_choices"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:tabBackground="@drawable/chart_choice_bg"
+            app:tabIndicatorColor="@color/primaryGreen"
+            app:tabIndicatorHeight="1dp"
+            app:tabSelectedTextColor="@color/primaryGreen">
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem_onDay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem_onWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem_onMonth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="月" />
+        </android.support.design.widget.TabLayout>
+    </LinearLayout>
+
+</LinearLayout>

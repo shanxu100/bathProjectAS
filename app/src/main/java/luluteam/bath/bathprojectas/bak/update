@@ -1,0 +1,99 @@
+//    /**
+//     * 发起检查更新的请求
+//     * <p>
+//     * VersionCode：2    给开发者比较版本是否有升级用的
+//     * VersionName：1.1  展示给用户看的
+//     */
+//    private void checkUpdate() {
+//        LoadingDialog loadingDialog = new LoadingDialog(context);
+//        loadingDialog.setLoadingText("正在检查更新");
+//        loadingDialog.show();
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("_api_key", APPConstant._API_KEY);
+//        params.put("appKey", APPConstant.APP_KEY);
+//        OkHttpManager.CommonGetAsyn("https://www.pgyer.com/apiv2/app/check", params, new OkHttpManager.ResultCallback() {
+//            @Override
+//            public void onCallBack(OkHttpManager.State state, String result) {
+//                loadingDialog.dismiss();
+//                if (state == OkHttpManager.State.SUCCESS) {
+//                    CheckUpdateResult2 checkUpdateResult = new Gson().fromJson(result, CheckUpdateResult2.class);
+//                    if (checkUpdateResult.getData().getBuildVersionNo() > App.getVersionCode()) {
+//                        UpdateActivity.this.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                needUpdate(checkUpdateResult);
+//                            }
+//                        });
+//                    } else {
+//                        UpdateActivity.this.finish();
+//                    }
+//                } else {
+//                    ToastUtil.showLongToast(context, "操作失败：" + result);
+//                    UpdateActivity.this.finish();
+//                }
+//            }
+//        });
+//
+//    }
+//
+//
+//    /**
+//     * 检测更新完成后，需要更新
+//     */
+//    private void needUpdate(CheckUpdateResult2 checkUpdateResult) {
+//        AlertDialog alertDialog;
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+//                .setTitle("更新提示")
+//                .setMessage("检测到新版本，是否更新")
+//                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        doUpdate(checkUpdateResult);
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                        UpdateActivity.this.finish();
+//                    }
+//                });
+//        alertDialog = builder.create();
+//        alertDialog.setCanceledOnTouchOutside(false);
+//        alertDialog.show();
+//    }
+//
+//    /**
+//     * 执行更新的动作
+//     */
+//    private void doUpdate(CheckUpdateResult2 checkUpdateResult) {
+//        ToastUtil.showLongToast(context, "开始下载");
+//        LoadingDialog loadingDialog = new LoadingDialog(context);
+//        loadingDialog.setCanceledOnTouchOutside(false);
+//        loadingDialog.show();
+//
+//        String url =  checkUpdateResult.getData().getDownloadURL();
+//        String fileName = url.substring(url.lastIndexOf("/") + 1);
+//        downloadFilePath = directory + File.separator + fileName;
+//        //  /data/user/0/luluteam.bath.bathprojectas/cache/bathProjectAS.apk
+//        Log.e(TAG, "update App===========download =" + downloadFilePath);
+//        OkHttpManager.download(url, directory.getAbsolutePath(), fileName, new OkHttpManager.ProgressListener() {
+//            @Override
+//            public void onProgress(long totalSize, long currSize, boolean done, int id) {
+////                System.out.println("download=====" + currSize);
+//                if (done) {
+//                    UpdateActivity.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            loadingDialog.dismiss();
+//                            installAPK(downloadFilePath);
+//                        }
+//                    });
+////                    System.out.println("download=====" + done);
+////                    loadingDialog.setLoadingText();
+//                }
+//            }
+//        }, null);
+//
+//    }

@@ -1,0 +1,127 @@
+package luluteam.bath.bathprojectas.utils;
+
+
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+
+import luluteam.bath.bathprojectas.R;
+import luluteam.bath.bathprojectas.constants.APPConstant;
+import luluteam.bath.bathprojectas.services.websocket.WebSocketClient;
+import luluteam.bath.bathprojectas.view.spinner.JJYSpinner;
+
+/**
+ * Created by sl on 2017/10/24.
+ */
+
+public class ToolbarUtil {
+
+    private static Toolbar toolbar;
+    private static TextView title;
+    private static ImageView iv_setPalce;
+
+    private ToolbarUtil() {
+        throw new AssertionError();
+    }
+
+    public static void setToolbarTitle(AppCompatActivity activity, int id, String title) {
+        toolbar = (Toolbar) activity.findViewById(id);
+        ToolbarUtil.title = (TextView) activity.findViewById(R.id.toolbar_title_tv);
+        toolbar.setTitle("");
+        ToolbarUtil.title.setText(title);
+        activity.setSupportActionBar(toolbar);
+    }
+
+    public static void setToolbarHome(AppCompatActivity activity) {
+        android.support.v7.app.ActionBar actionBar = activity.getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public static void choosePlace(AppCompatActivity activity, DialogCallBack callBack) {
+        iv_setPalce = (ImageView) activity.findViewById(R.id.toolbar_function_iv);
+        iv_setPalce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertChoosePlaceDialog(activity, callBack);
+            }
+        });
+    }
+
+//    public static void setOnMenuItemClickListener(Toolbar.OnMenuItemClickListener listener){
+//        toolbar.setOnMenuItemClickListener(listener);
+//    }
+
+    public static void alertChoosePlaceDialog(AppCompatActivity context, DialogCallBack callBack) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_place_select, null);
+        JJYSpinner spinner = (JJYSpinner) view.findViewById(R.id.ID_sp);
+        RadioGroup group = (RadioGroup) view.findViewById(R.id.usage_radiogroup);
+        String toiletId = SharedPreferencesUtil.getString(context, "toiletId");
+        String toiletType = SharedPreferencesUtil.getString(context, "usage");
+
+        spinner.additem(APPConstant.TOILETIDS);
+
+        System.out.println("toiletId:" + toiletId);
+        System.out.println("usage:" + toiletType);
+        if (toiletId != null && toiletType != null) {
+            switch (toiletType) {
+                case "1":
+                    group.check(R.id.bathMan);
+                    break;
+                case "2":
+                    group.check(R.id.bathWomen);
+                    break;
+                case "3":
+                    group.check(R.id.bathThird);
+                    break;
+            }
+            for (int i = 0; i < APPConstant.TOILETIDS.length; i++) {
+                if (APPConstant.TOILETIDS[i].equals(toiletId)) {
+                    spinner.setSelectedposition(i);
+                }
+            }
+
+        }
+        builder.setTitle("厕所选择")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferencesUtil.putString(context, "toiletId", APPConstant.TOILETIDS[spinner.getSelectedposition()]);
+                        String usage = "";
+                        WebSocketClient.getInstance().sendMsg(APPConstant.TOILETIDS[spinner.getSelectedposition()]);
+                        switch (group.getCheckedRadioButtonId()) {
+                            case R.id.bathMan:
+                                usage = "1";
+                                break;
+                            case R.id.bathWomen:
+                                usage = "2";
+                                break;
+                            case R.id.bathThird:
+                                usage = "3";
+                        }
+                        SharedPreferencesUtil.putString(context, "usage", usage);
+                        SharedPreferencesUtil.putString(context, "usage", usage);
+                        System.out.println("ToolUtil:onClick");
+                        if (callBack != null) {
+                            System.out.println("RecordInfoCallback:+++++++++");
+                            callBack.onSure();
+                        }
+
+                    }
+                })
+                .setView(view).show();
+    }
+
+    public interface DialogCallBack {
+        void onSure();
+    }
+}
